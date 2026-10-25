@@ -1,5 +1,7 @@
 # Study Sprout — ChatGPT Sites build brief
 
+Related conversation: [Create Study Sprout Website](https://chatgpt.com/c/6ade811e-e10c-83e8-908a-c5311931240e). Access may require the originating ChatGPT account; this is a conversation link, not a published app URL.
+
 Build and host a working, mobile-friendly Study Sprout website in ChatGPT Sites for a two-hour Oracle AI World Hackathon project. Build the actual app, not a marketing landing page.
 
 ## Product
