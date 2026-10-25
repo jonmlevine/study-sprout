@@ -14,6 +14,10 @@ The conversation link may require the originating ChatGPT account. It is a proje
 
 ## Optional source reproduction for developers
 
+For a repeatable judge workflow, open `/?judge=1`. It seeds fictional biology notes with two questions, keeps demo progress separate, and provides **Reset judge demo**. The demo refreshes on a new day to avoid expired exam dates. Offline planning runs entirely in the browser, including on static hosting. OCI mode still needs the configured Node backend.
+
+Progress uses local storage, falling back to tab session storage if necessary. A persistent warning explains tab-only or memory-only operation; invalid stored data is preserved rather than overwritten. If both storage mechanisms are blocked, reload persistence is impossible: export a readable plan before leaving.
+
 These instructions run the separate Node implementation for code verification. They are not the hosted demo or judge entry point; use the ChatGPT Site above to evaluate the public app.
 
 Requires Node.js 20.12 or newer. No dependencies, package installation, account, or API key are needed for offline mode.

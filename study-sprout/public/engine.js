@@ -22,6 +22,10 @@ export function localDate(date = new Date()) {
 export function addDays(date, count) {
   const d = new Date(`${date}T12:00:00`); d.setDate(d.getDate()+count); return localDate(d);
 }
+export const JUDGE_NOTES='Plants convert sunlight into chemical energy. Chloroplasts contain membranes, enzymes and pigments.';
+export function createJudgePlan(today=localDate()) {
+  return createPlan({subject:'Judge demo - Biology',notes:JUDGE_NOTES,startDate:today,examDate:addDays(today,7),minutes:30},offlineTopics(JUDGE_NOTES),'offline');
+}
 export function dayDistance(a,b) {
   return Math.round((Date.parse(`${b}T12:00:00Z`)-Date.parse(`${a}T12:00:00Z`))/86400000);
 }

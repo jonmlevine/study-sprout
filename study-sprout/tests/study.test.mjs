@@ -68,6 +68,8 @@ test('HTTP app serves UI, creates plans, rejects bad requests and protects priva
     const index=await fetch(base);assert.equal(index.status,200);assert.match(await index.text(),/Study Sprout/);
     const demo=await fetch(base+'/demo');assert.equal(demo.status,200);assert.match(await demo.text(),/DEMAND REALITY/);
     assert.equal((await fetch(base+'/adaptive.js')).status,200);
+    assert.equal((await fetch(base+'/storage.js')).status,200);
+    assert.equal((await fetch(base+'/?judge=1')).status,200);
     const config=await(await fetch(base+'/api/config')).json();assert.equal(config.storage,'browser');
     const request=data=>fetch(base+'/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     const good=await request(input);assert.equal(good.status,200);assert.equal((await good.json()).topics.length,6);

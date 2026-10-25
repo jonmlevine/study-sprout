@@ -8,7 +8,7 @@ import {hasOCI,generateOCI} from './oci.mjs';
 
 const publicDir=fileURLToPath(new URL('./public/',import.meta.url));
 const files=new Map([['/','index.html'],['/index.html','index.html'],['/styles.css','styles.css'],['/app.js','app.js'],['/engine.js','engine.js'],['/favicon.svg','favicon.svg']]);
-for(const file of ['adaptive.js','adaptive.css','demo.html','demo.css','demo.js'])files.set('/'+file,file);
+for(const file of ['adaptive.js','adaptive.css','demo.html','demo.css','demo.js','storage.js'])files.set('/'+file,file);
 files.set('/demo','demo.html');
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml'};
 export function makeServer() {
