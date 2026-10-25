@@ -1,12 +1,13 @@
 {
   "name": "study-sprout",
-  "version": "1.1.0",
+  "version": "1.4.0",
   "private": true,
   "type": "module",
   "description": "A notes-to-plan study companion with adaptive quizzes and optional OCI Generative AI.",
   "engines": { "node": ">=20.12" },
   "scripts": {
     "start": "node server.mjs",
+    "build:demo": "node build-static.mjs",
     "test": "node --test tests"
   }
 }

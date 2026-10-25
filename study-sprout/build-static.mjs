@@ -1,0 +1,11 @@
+import {mkdir,copyFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('.',import.meta.url));
+const output=path.resolve(process.argv[2]||path.join(root,'demo'));
+const assets=['index.html','styles.css','app.js','engine.js','runtime.js','favicon.svg','adaptive.js','adaptive.css','benefit.js','benefit-model.js','benefit.css','lab.js','lab-model.js','lab.css','demo.html','demo.css','demo.js','pilot.js','pilot.css'];
+await mkdir(output,{recursive:true});
+for(const asset of assets)await copyFile(path.join(root,'public',asset),path.join(output,asset));
+await mkdir(path.join(output,'api'),{recursive:true});
+await writeFile(path.join(output,'api','config'),JSON.stringify({ociAvailable:false,ociVerified:false,backendAvailable:false,storage:'browser',access:'guest',version:'1.4.0'}));
+console.log(`Guest demo ready: ${output}. Upload this folder to an HTTPS static host. No authentication or backend required.`);

@@ -1,5 +1,7 @@
 # Study Sprout — judging kit
 
+**Version 1.3:** See `HACKATHON-UPGRADE.md` for the latest Learning lab demo, recovery simulator and participant-evidence workflow. The older quiz-first demo below remains available.
+
 ## Positioning
 
 **For first-year college STEM students with an exam approaching and limited daily time, Study Sprout turns their own notes and quiz evidence into the next useful study session.**
@@ -12,10 +14,10 @@ Open `http://127.0.0.1:4173/demo` for the complete judge-facing walkthrough. The
 
 | Category / weight | Criteria addressed | Reviewable proof | Remaining external proof |
 |---|---|---|---|
-| Demand Reality & Problem Severity / 25% | Specific pain; target user; current workflow; potential impact | Seven-day exam scenario, notes-to-recall-to-plan workflow, research sources, explicit impact hypotheses | Interviews must establish frequency, severity, and what students actually do today. No customer interviews are claimed. |
+| Demand Reality & Problem Severity / 25% | Specific pain; target user; current workflow; potential impact | Seven-day exam scenario, notes-to-recall-to-plan workflow, research sources, explicit impact hypotheses, anonymous pilot observation console | Interviews must establish frequency, severity, and what students actually do today. No customer interviews are claimed. |
 | Target Customer & Market Scope / 20% | Clear user; broader relevance; creative AI use; differentiation; reason to use | Narrow initial audience, evidence of student AI adoption, confidence-aware coaching, campus distribution hypothesis, capacity-constrained scheduling | Validate the target segment and campus buyer. A market-size estimate or buyer commitment has not been established. |
-| Solution Fit & Product Design / 20% | Better workflow; before/after; intuitive key action; clean interface | Guided setup, source evidence, confidence input, visible recommendations, replan preview, daily totals, persistence, responsive UI | Observe uncoached students using the app. Better learning or reduced planning effort remains a hypothesis. |
-| Technical Execution & Demo Proof / 20% | Working software; URL; login/verification steps; AI use; architecture; performance | Local URL, no local login, sample notes, 17 automated tests, 23 browser-run smoke assertions, downloadable verification report, architecture on `/demo`, OCI adapter and Dockerfile | Public HTTPS URL and live OCI quality/latency/cost need team credentials and deployment. Offline operation is explicitly labeled rule-based. |
+| Solution Fit & Product Design / 20% | Better workflow; before/after; intuitive key action; clean interface | Guided setup, source evidence, confidence input, source-backed explain-back self-checks, topic evidence map, recovery simulation with days off, visible recommendations, replan preview, daily totals, persistence, responsive UI | Observe uncoached students using the app. Better learning or reduced planning effort remains a hypothesis. |
+| Technical Execution & Demo Proof / 20% | Working software; URL; login/verification steps; AI use; architecture; performance | Local URL, no local login, sample notes, 32 automated tests, 23 browser-run smoke assertions, downloadable verification report, architecture on `/demo`, OCI adapter and Dockerfile | Public HTTPS URL and live OCI quality/latency/cost need team credentials and deployment. Offline operation is explicitly labeled rule-based. |
 | Differentiation & Investment Readiness / 15% | Meaningful difference; alternatives; defensibility; next-version proof | Confidence → review → capacity-aware plan loop; honest competitor comparison; business hypothesis; proposed pilot; clearly stated limitations | No moat, traction, revenue, willingness-to-pay evidence, or outcome advantage is claimed. These must be earned through research and operation. |
 
 Weights total 100%. This table is an evidence map, not a prediction of the judges' score.

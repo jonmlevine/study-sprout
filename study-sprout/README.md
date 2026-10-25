@@ -4,15 +4,15 @@ A working hackathon application that turns study notes into a manageable plan, t
 
 Version 1.1 adds confidence-aware review priorities, capacity-aware replanning with previews, and a judge-facing evidence page at **http://127.0.0.1:4173/demo**. Read `JUDGING-KIT.md` for the rubric map, pitch, and pilot proposal; read `VERIFICATION.md` for observed test results. The app addresses each rubric category with features or evidence, while clearly identifying the external validation still needed.
 
-## Project references
+Version 1.2 adds **Time benefit**: a paired stopwatch comparison of manual and assisted decisions about what to study next. Open **http://127.0.0.1:4173/#benefit** with an existing plan.
 
-- [Live Study Sprout app](https://study-sprout-journal.saltyegret15.chatgpt.site/)
-- [ChatGPT conversation: Create Study Sprout Website](https://chatgpt.com/c/6ade811e-e10c-83e8-908a-c5311931240e)
-- [ChatGPT Sites build brief](../SITES_BUILD_PROMPT.md)
+Version 1.3 adds a **Learning lab** with source-backed explain-back self-checks, a topic evidence map, an exam-recovery simulator with days off, matched-question progress, and a judge-facing pilot evidence console. Open **http://127.0.0.1:4173/#lab** or **http://127.0.0.1:4173/demo#pilot**. Read `HACKATHON-UPGRADE.md` for the new three-minute demo and rubric mapping.
 
-The conversation link may require the originating ChatGPT account. It is a project reference, not a published app URL.
+Version 1.4 adds **Try instant demo** and fully browser-based offline generation. No login, account or backend is required for the guest workflow. Use `build-static.mjs` to prepare an HTTPS static website; see `GUEST-DEMO.md` for publishing instructions.
 
 ## Run locally
+
+The latest ready-to-publish guest website is also included in **`demo/` inside this main application folder**. It contains instant sample access, Learning lab, Time benefit, and the judge page, with no sign-in or backend requirement. Rebuild it from the current app with `npm run build:demo`. Upload the contents of `demo/` when publishing a static website; run the main application as described below for local use.
 
 Requires Node.js 20.12 or newer. No dependencies, package installation, account, or API key are needed for offline mode.
 
@@ -60,7 +60,7 @@ Implementation references: [Oracle request signing](https://docs.oracle.com/en-u
 npm test
 ```
 
-The 17 automated tests cover the original study workflow plus confidence priorities, review timing, capacity-aware catch-up planning, completed-work preservation, review deduplication, and impossible deadlines. See `VERIFICATION.md` for the measured result and browser checks.
+The 34 automated tests cover the original study workflow plus confidence priorities, review timing, capacity-aware catch-up planning, completed-work preservation, review deduplication, impossible deadlines, stopwatch pause/resume, time-difference calculations, paired summaries, completed decision validation, explain-back source filtering and validation, self-check priorities, matched and delayed recall metrics, unavailable-day scheduling, and rehearsal-excluding pilot summaries. See `VERIFICATION.md` for observed results and browser checks.
 
 In the restricted build environment, run:
 
@@ -84,6 +84,7 @@ The real OCI API has not been exercised without credentials. The adapter is veri
 - `public/index.html`, `styles.css`, `app.js`: dependency-free browser application.
 - `public/engine.js`: input checks, offline generator, scheduler, quiz selection, and progress calculations.
 - `public/adaptive.js` and `adaptive.css`: confidence controls, explainable coaching, and the replan preview.
+- `public/benefit.js`, `benefit-model.js`, and `benefit.css`: timed task comparisons, saved history, and JSON report export.
 - `public/demo.html`, `demo.css`, `demo.js`: rubric-aligned walkthrough, research links, architecture, and executable local verification with measured timings.
 - `server.mjs`: static serving and the JSON API.
 - `oci.mjs`: server-side OCI signed requests and response validation.
@@ -91,7 +92,7 @@ The real OCI API has not been exercised without credentials. The adapter is veri
 
 Local storage belongs to a single browser origin. There is no login, cloud database, cross-device sync, PDF/OCR import, or server-side student history. Closing an unfinished quiz loses that attempt. Saved plans remain until the browser's site data is cleared. Export is a readable Markdown copy, not a restorable backup.
 
-This is a single-user hackathon MVP. The service binds to loopback by default. The Docker image listens on all container interfaces; publish its port to loopback for local use. Before exposing an OCI-enabled deployment publicly, add authentication, per-user quotas, HTTPS, and persistent user-scoped storage. A concurrency limit is present, but it is not a substitute for access control or billing limits.
+The guest demo runs in each visitor’s browser and requires no authentication. Publish the static package over HTTPS for an open demonstration. The optional Node service binds to loopback by default; the Docker image listens on all container interfaces. The static demo has no paid OCI endpoint. A separately hosted OCI backend needs an explicit usage-control and billing-limit design before public use; its concurrency limit alone does not bound spending.
 
 Example local container run:
 
@@ -100,4 +101,4 @@ docker build -t study-sprout .
 docker run --rm -p 127.0.0.1:4173:4173 study-sprout
 ```
 
-For an OCI-enabled container, inject the environment variables and mount the private key read-only at the configured container path. Do not bake credentials into the image. The app is hosted at the ChatGPT Sites URL above; an OCI deployment has not been verified.
+For an OCI-enabled container, inject the environment variables and mount the private key read-only at the configured container path. Do not bake credentials into the image. No cloud resources have been created or deployed by this project.

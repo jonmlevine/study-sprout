@@ -9,6 +9,8 @@ import {hasOCI,generateOCI} from './oci.mjs';
 const publicDir=fileURLToPath(new URL('./public/',import.meta.url));
 const files=new Map([['/','index.html'],['/index.html','index.html'],['/styles.css','styles.css'],['/app.js','app.js'],['/engine.js','engine.js'],['/favicon.svg','favicon.svg']]);
 for(const file of ['adaptive.js','adaptive.css','demo.html','demo.css','demo.js'])files.set('/'+file,file);
+for(const file of ['benefit.js','benefit-model.js','benefit.css'])files.set('/'+file,file);
+for(const file of ['lab.js','lab-model.js','lab.css','pilot.js','pilot.css','runtime.js'])files.set('/'+file,file);
 files.set('/demo','demo.html');
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml'};
 export function makeServer() {
@@ -22,7 +24,7 @@ export function makeServer() {
     const json=(status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify(data));};
     try {
       const url=new URL(req.url,'http://localhost');
-      if(req.method==='GET' && url.pathname==='/api/config') return json(200,{ociAvailable:hasOCI(),ociVerified:Boolean(lastOCISuccess),lastOCISuccess,storage:'browser',version:'1.1.0'});
+      if(req.method==='GET' && url.pathname==='/api/config') return json(200,{ociAvailable:hasOCI(),ociVerified:Boolean(lastOCISuccess),lastOCISuccess,storage:'browser',version:'1.4.0',access:'guest'});
       if(req.method==='POST' && url.pathname==='/api/plan') {
         if(req.headers.origin && new URL(req.headers.origin).host!==req.headers.host) return json(403,{error:'This request must come from the Study Sprout app.'});
         if(!req.headers['content-type']?.startsWith('application/json')) return json(415,{error:'Send JSON study data.'});

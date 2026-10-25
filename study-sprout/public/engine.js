@@ -152,20 +152,25 @@ export function reviewSignals(plan,today=localDate()) {
     else if(confidentWrong.length){priority=100;reason=`${confidentWrong.length} confident wrong answer${confidentWrong.length>1?'s':''}. Check the source before reinforcing this idea.`;label='Check a misconception';}
     else if(wrong.length){priority=80;reason=`${wrong.length} missed question${wrong.length>1?'s':''}. Read the evidence, then try recalling it.`;label='Needs another look';}
     else if(uncertain.length){priority=55;reason='Correct, but you were uncertain. Test recall again soon.';label='Build confidence';}
-    const dueAt=answers.length?answers.map(a=>addDays(a.day,!a.correct?0:a.confidence==='sure'?3:1)).sort()[0]:today;
-    const evidenceKey=String(hash(answers.map(a=>`${a.questionId}:${a.at}:${a.correct}:${a.confidence||'unsure'}`).join('|')));
-    return {topicId:topic.id,title:topic.title,priority,reason,label,dueAt,due:dueAt<=today,answered:answers.length,wrong:wrong.length,confidentWrong:confidentWrong.length,uncertain:uncertain.length,evidenceKey};
+    const reflection=(plan.reflections||[]).filter(r=>r.topicId===topic.id).at(-1);
+    const gaps=(reflection?.checks||[]).filter(c=>c.rating!=='covered').length;
+    if(gaps&&priority<90){priority=90;reason=`${gaps} source point${gaps===1?'':'s'} marked missing or uncertain in your latest explain-back. This is your self-check, not an AI grade.`;label='Close an explanation gap';}
+    const dueAt=gaps?today:answers.length?answers.map(a=>addDays(a.day,!a.correct?0:a.confidence==='sure'?3:1)).sort()[0]:today;
+    const evidenceKey=String(hash(answers.map(a=>`${a.questionId}:${a.at}:${a.correct}:${a.confidence||'unsure'}`).join('|')+(gaps?`|reflection:${reflection.id}`:'')));
+    return {topicId:topic.id,title:topic.title,priority,reason,label,dueAt,due:dueAt<=today,answered:answers.length,gaps,wrong:wrong.length,confidentWrong:confidentWrong.length,uncertain:uncertain.length,evidenceKey};
   }).sort((a,b)=>b.priority-a.priority||a.dueAt.localeCompare(b.dueAt));
 }
 
-export function replanRemaining(plan,{today=localDate(),minutes=plan.minutes}={}) {
+export function replanRemaining(plan,{today=localDate(),minutes=plan.minutes,blockedDates=plan.unavailableDates||[]}={}) {
   if(!/^\d{4}-\d{2}-\d{2}$/.test(today)||Number.isNaN(Date.parse(today))||new Date(today).toISOString().slice(0,10)!==today)throw new Error('Choose a valid planning date.');
   if(!Number.isInteger(minutes)||minutes<10||minutes>180)throw new Error('Choose 10–180 minutes per day.');
+  if(!Array.isArray(blockedDates)||blockedDates.some(d=>!/^\d{4}-\d{2}-\d{2}$/.test(d)||Number.isNaN(Date.parse(d))||new Date(d).toISOString().slice(0,10)!==d))throw new Error('Choose valid unavailable dates.');
+  const blocked=new Set(blockedDates);
   const completed=plan.sessions.filter(s=>s.done).map(s=>({...s,originalDate:s.originalDate||s.date,date:s.completedOn||s.date}));
   const used={};for(const s of completed){const date=s.completedOn||s.date;used[date]=(used[date]||0)+s.minutes;}
   // Rebuild outstanding reviews from current quiz evidence, rather than stacking duplicates.
   const signals=reviewSignals(plan,today);
-  const reviews=signals.filter(s=>s.answered&&s.dueAt<plan.examDate).map(s=>({id:`r-${s.topicId}-${s.evidenceKey}`,topicId:s.topicId,title:s.title,minutes:Math.max(0,10-completed.filter(c=>c.kind==='review'&&c.topicId===s.topicId&&c.evidenceKey===s.evidenceKey).reduce((n,c)=>n+c.minutes,0)),kind:'review',reason:s.reason,priority:s.priority,dueAt:s.dueAt,evidenceKey:s.evidenceKey})).filter(s=>s.minutes>0);
+  const reviews=signals.filter(s=>(s.answered||s.gaps)&&s.dueAt<plan.examDate).map(s=>({id:`r-${s.topicId}-${s.evidenceKey}`,topicId:s.topicId,title:s.title,minutes:Math.max(0,10-completed.filter(c=>c.kind==='review'&&c.topicId===s.topicId&&c.evidenceKey===s.evidenceKey).reduce((n,c)=>n+c.minutes,0)),kind:'review',reason:s.reason,priority:s.priority,dueAt:s.dueAt,evidenceKey:s.evidenceKey})).filter(s=>s.minutes>0);
   const learning=plan.sessions.filter(s=>!s.done&&s.kind!=='review').map(s=>({...s,priority:s.date<today?70:30,dueAt:today,reason:s.date<today?'Catch up on an unfinished session.':'Continue your original study plan.'}));
   const tasks=[...reviews,...learning].sort((a,b)=>b.priority-a.priority);
   const scheduled=[],unplaced=[];
@@ -173,7 +178,7 @@ export function replanRemaining(plan,{today=localDate(),minutes=plan.minutes}={}
     let remaining=task.minutes,part=0;
     let date=task.dueAt>today?task.dueAt:today;
     while(remaining>0&&date<plan.examDate){
-      const available=Math.max(0,minutes-(used[date]||0));
+      const available=blocked.has(date)?0:Math.max(0,minutes-(used[date]||0));
       if(available){const duration=Math.min(remaining,available);part++;scheduled.push({...task,id:`${task.id}-p${part}`,minutes:duration,date,part,done:false});used[date]=(used[date]||0)+duration;remaining-=duration;}
       date=addDays(date,1);
     }
