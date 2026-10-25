@@ -1,8 +1,8 @@
 # Study Sprout
 
-A working hackathon application that turns study notes into a manageable plan, tests recall, and recommends topics to revisit.
+A hackathon prototype for grades 6–8 students and their parent buyers: turn notes for one upcoming test into a doable study plan, check recall, and choose what to revisit. Parent demand and student outcomes remain unvalidated. See [the revised submission](../SUBMISSION.md) for the customer, sourced population context, and measurable pilot targets.
 
-Version 1.1 adds confidence-aware review priorities, capacity-aware replanning with previews, and a judge-facing evidence page at **http://127.0.0.1:4173/demo**. Read `JUDGING-KIT.md` for the rubric map, pitch, and pilot proposal; read `VERIFICATION.md` for observed test results. The app addresses each rubric category with features or evidence, while clearly identifying the external validation still needed.
+Version 1.1 adds confidence-aware review priorities and capacity-aware replanning with previews. **Use the [ChatGPT Site](https://study-sprout-journal.saltyegret15.chatgpt.site/) and its [judge walkthrough](https://study-sprout-journal.saltyegret15.chatgpt.site/demo) for judging.** Read `JUDGING-KIT.md` for the middle-school/parent rubric map and pilot proposal; read `VERIFICATION.md` for observed test results.
 
 ## Project references
 
@@ -12,7 +12,9 @@ Version 1.1 adds confidence-aware review priorities, capacity-aware replanning w
 
 The conversation link may require the originating ChatGPT account. It is a project reference, not a published app URL.
 
-## Run locally
+## Optional source reproduction for developers
+
+These instructions run the separate Node implementation for code verification. They are not the hosted demo or judge entry point; use the ChatGPT Site above to evaluate the public app.
 
 Requires Node.js 20.12 or newer. No dependencies, package installation, account, or API key are needed for offline mode.
 
@@ -84,7 +86,7 @@ The real OCI API has not been exercised without credentials. The adapter is veri
 - `public/index.html`, `styles.css`, `app.js`: dependency-free browser application.
 - `public/engine.js`: input checks, offline generator, scheduler, quiz selection, and progress calculations.
 - `public/adaptive.js` and `adaptive.css`: confidence controls, explainable coaching, and the replan preview.
-- `public/demo.html`, `demo.css`, `demo.js`: rubric-aligned walkthrough, research links, architecture, and executable local verification with measured timings.
+- `public/demo.html`, `demo.css`, `demo.js`: the published version 3 judge page, synchronized from its source archive; rubric evidence, dated market context, and 21 browser-local smoke checks. These checks do not exercise the Node API or OCI.
 - `server.mjs`: static serving and the JSON API.
 - `oci.mjs`: server-side OCI signed requests and response validation.
 - `Dockerfile`: a portable Node container for a secured OCI compute/container environment.
@@ -100,4 +102,8 @@ docker build -t study-sprout .
 docker run --rm -p 127.0.0.1:4173:4173 study-sprout
 ```
 
-For an OCI-enabled container, inject the environment variables and mount the private key read-only at the configured container path. Do not bake credentials into the image. The app is hosted at the ChatGPT Sites URL above; an OCI deployment has not been verified.
+For an OCI-enabled container, inject the environment variables and mount the private key read-only at the configured container path. Do not bake credentials into the image. A browser-only adaptation is hosted at the ChatGPT Sites URL above and was checked on October 25, 2026. It generates plans in the browser and disables OCI; it is not the same server architecture as this repository. The exact source-to-deployment mapping and an OCI deployment have not been verified. Do not treat local changes as published until the hosted release is updated and checked.
+
+## Product boundaries
+
+This wedge is one child, one subject, one test, and a useful next task. Garden growth, an elapsed-time focus timer, parent dashboards, native-app blocking, and isolated demo records are not implemented. Recorded study time sums estimated durations of self-reported completed sessions. The current workflow is a fictional-data demonstration, not a production student service. Family use needs validated content, reliable releases and recovery, age-appropriate privacy and consent design, and controls before paid inference.
