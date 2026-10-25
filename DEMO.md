@@ -7,7 +7,7 @@
 - [Source and local instructions](study-sprout/README.md)
 - [Revised submission](SUBMISSION.md)
 
-No student account is needed for the demonstrated workflow. Use fictional notes and a separate browser profile for an empty workspace: sample plans currently share regular browser storage. A new tab does not isolate storage. Do not clear someone else's progress.
+No student account is needed. For isolated repeatable verification, open [Judge demo](https://study-sprout-journal.saltyegret15.chatgpt.site/?judge=1). It seeds fictional biology notes and two questions. Reset affects only demo progress. Regular sample plans still use the study workspace; do not clear someone else's progress.
 
 ## Three-minute demo
 
@@ -22,4 +22,4 @@ No student account is needed for the demonstrated workflow. Use fictional notes 
 
 The proposed pilot is 20 parent–student pairs: target at least 30% lower median planning time versus their usual workflow, and 12 of 20 returning on three distinct study days in two weeks. These are thresholds, not results. See `SUBMISSION.md` for measurement design and the sourced historical population of approximately 11.1 million U.S. public-school students in grades 6–8.
 
-The hosted browser adaptation differs from the repository Node build; the source-to-release mapping is unverified. OCI is disabled on the hosted version. Garden growth, a timer, automatic app blocking, demo-data isolation, and a parent dashboard are not built. See `study-sprout/VERIFICATION.md` for observed checks and release work.
+The hosted browser adaptation differs from the repository Node build; the source-to-release mapping is unverified. OCI is disabled on the hosted version. Garden growth, a timer, automatic app blocking, and a parent dashboard are not built. Judge-demo data is now isolated. See `study-sprout/VERIFICATION.md` for observed checks and release work.

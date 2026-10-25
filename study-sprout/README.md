@@ -66,7 +66,7 @@ Implementation references: [Oracle request signing](https://docs.oracle.com/en-u
 npm test
 ```
 
-The 17 automated tests cover the original study workflow plus confidence priorities, review timing, capacity-aware catch-up planning, completed-work preservation, review deduplication, and impossible deadlines. See `VERIFICATION.md` for the measured result and browser checks.
+The 23 automated tests cover the original study workflow plus confidence priorities, review timing, capacity-aware catch-up planning, completed-work preservation, review deduplication, impossible deadlines, storage fallback and invalid-record preservation, and the repeatable judge fixture. See `VERIFICATION.md` for the measured result and browser checks.
 
 In the restricted build environment, run:
 
@@ -110,4 +110,4 @@ For an OCI-enabled container, inject the environment variables and mount the pri
 
 ## Product boundaries
 
-This wedge is one child, one subject, one test, and a useful next task. Garden growth, an elapsed-time focus timer, parent dashboards, native-app blocking, and isolated demo records are not implemented. Recorded study time sums estimated durations of self-reported completed sessions. The current workflow is a fictional-data demonstration, not a production student service. Family use needs validated content, reliable releases and recovery, age-appropriate privacy and consent design, and controls before paid inference.
+This wedge is one child, one subject, one test, and a useful next task. Garden growth, an elapsed-time focus timer, parent dashboards, and native-app blocking are not implemented. The judge demo now has isolated records. Recorded study time sums estimated durations of self-reported completed sessions. The current workflow is a fictional-data demonstration, not a production student service. Family use needs validated content, reliable releases and recovery, age-appropriate privacy and consent design, and controls before paid inference.

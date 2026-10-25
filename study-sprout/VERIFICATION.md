@@ -1,5 +1,13 @@
 # Verification — October 25, 2026
 
+## Judge reliability update — deployed version 5
+
+Commit `b4a7b503fc8a01d3e1a1b7a4998a94cfe6598cd6` passed **23/23 repository tests**. The new cases cover legacy progress loading, session-storage fallback, restoration of the latest fallback snapshot after quota failure, preservation of invalid raw records, truthful memory-only status, and the fixed two-question judge fixture.
+
+Directly checked on the [public judge entry](https://study-sprout-journal.saltyegret15.chatgpt.site/?judge=1): seeded study topic and source evidence, explicit session completion persisting after reload, two confidently incorrect quiz answers, corresponding review reasons, applying the time-budgeted schedule, and completion plus review state surviving reload. Reset restored the demo to its initial state; the regular workspace remained available separately. The public `/demo` checks passed **21/21** after deployment (median **4.3 ms**, maximum **10.3 ms**, browser-local generation).
+
+Sites reported version 5 published from that commit. Storage restrictions were injected in automated tests, not browser settings. If both local and session storage are blocked, reload persistence is impossible and the app reports that limitation; hosting-level access controls cannot be bypassed by application code.
+
 ## Earlier checks recorded with the imported source
 
 17 tests passed with Node.js 20.17.0:
