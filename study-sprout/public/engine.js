@@ -34,7 +34,8 @@ export function validateInput(input) {
   const examDate = input.examDate;
   const validDate = d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d) && !Number.isNaN(Date.parse(d)) && new Date(d).toISOString().slice(0,10) === d;
   if (!subject || subject.length > 80) throw new Error('Use a subject name between 1 and 80 characters.');
-  if (notes.length < 100 || notes.length > 20000) throw new Error('Add between 100 and 20,000 characters of study notes.');
+  if (!notes) throw new Error('Add your study notes.');
+  if (notes.length > 20000) throw new Error('Use at most 20,000 characters of study notes.');
   if (!Number.isInteger(minutes) || minutes < 10 || minutes > 180) throw new Error('Choose 10–180 study minutes per day.');
   if (!validDate(startDate) || !validDate(examDate)) throw new Error('Choose valid start and exam dates.');
   const days = dayDistance(startDate, examDate);

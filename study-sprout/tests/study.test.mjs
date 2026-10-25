@@ -25,7 +25,8 @@ test('date calculations cross DST and year boundaries without losing days',()=>{
   assert.equal(dayDistance('2026-10-31','2026-11-02'),2);assert.equal(addDays('2026-12-31',1),'2027-01-01');
 });
 test('invalid or impossible study requests are rejected',()=>{
-  for(const change of [{notes:'too short'},{minutes:0},{minutes:30.5},{subject:' '},{examDate:'2026-10-25'},{examDate:'2026-02-30'},{examDate:'2027-12-31'},{startDate:'bad'}])assert.throws(()=>validateInput({...input,...change}));
+  assert.equal(validateInput({...input,notes:'Short notes'}).notes,'Short notes');
+  for(const change of [{notes:'   '},{notes:'a'.repeat(20001)},{minutes:0},{minutes:30.5},{subject:' '},{examDate:'2026-10-25'},{examDate:'2026-02-30'},{examDate:'2027-12-31'},{startDate:'bad'}])assert.throws(()=>validateInput({...input,...change}));
   assert.throws(()=>createPlan({...input,minutes:10,examDate:'2026-10-26'},offlineTopics(SAMPLE_NOTES)),/too much material/);
 });
 test('quiz covers multiple topics and topic review uses the latest answer',()=>{
@@ -70,6 +71,8 @@ test('HTTP app serves UI, creates plans, rejects bad requests and protects priva
     const config=await(await fetch(base+'/api/config')).json();assert.equal(config.storage,'browser');
     const request=data=>fetch(base+'/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     const good=await request(input);assert.equal(good.status,200);assert.equal((await good.json()).topics.length,6);
+    const shortNotes='Plants convert sunlight into chemical energy. Chloroplasts contain membranes, enzymes and pigments.';
+    assert.ok(shortNotes.length<100);assert.equal((await request({...input,notes:shortNotes})).status,200);
     assert.equal((await request({...input,minutes:0})).status,400);
     assert.equal((await request({...input,provider:'unknown'})).status,400);
     assert.equal((await fetch(base+'/.env')).status,404);assert.equal((await fetch(base+'/oci.mjs')).status,404);
