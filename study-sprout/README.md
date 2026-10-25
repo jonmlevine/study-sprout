@@ -4,6 +4,14 @@ A working hackathon application that turns study notes into a manageable plan, t
 
 Version 1.1 adds confidence-aware review priorities, capacity-aware replanning with previews, and a judge-facing evidence page at **http://127.0.0.1:4173/demo**. Read `JUDGING-KIT.md` for the rubric map, pitch, and pilot proposal; read `VERIFICATION.md` for observed test results. The app addresses each rubric category with features or evidence, while clearly identifying the external validation still needed.
 
+## Project references
+
+- [Live Study Sprout app](https://study-sprout-journal.saltyegret15.chatgpt.site/)
+- [ChatGPT conversation: Create Study Sprout Website](https://chatgpt.com/c/6ade811e-e10c-83e8-908a-c5311931240e)
+- [ChatGPT Sites build brief](../SITES_BUILD_PROMPT.md)
+
+The conversation link may require the originating ChatGPT account. It is a project reference, not a published app URL.
+
 ## Run locally
 
 Requires Node.js 20.12 or newer. No dependencies, package installation, account, or API key are needed for offline mode.
@@ -92,4 +100,4 @@ docker build -t study-sprout .
 docker run --rm -p 127.0.0.1:4173:4173 study-sprout
 ```
 
-For an OCI-enabled container, inject the environment variables and mount the private key read-only at the configured container path. Do not bake credentials into the image. No cloud resources have been created or deployed by this project.
+For an OCI-enabled container, inject the environment variables and mount the private key read-only at the configured container path. Do not bake credentials into the image. The app is hosted at the ChatGPT Sites URL above; an OCI deployment has not been verified.

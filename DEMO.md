@@ -1,6 +1,8 @@
 # Study Sprout judge walkthrough
 
-Deployment status: not yet created or verified.
+Hosted app: [Open Study Sprout](https://study-sprout-journal.saltyegret15.chatgpt.site/).
+
+The homepage loaded in a browser on October 25, 2026. The complete hosted workflow and deployed Git revision have not been verified.
 
 1. Open the published site without an owner session. Confirm the app loads without student registration.
 2. Enter Judge demo. Confirm accelerated time and sample data are visibly labeled.
@@ -13,7 +15,7 @@ Deployment status: not yet created or verified.
 
 ## Submission evidence to fill after verification
 
-- Live public URL:
+- Live public URL: https://study-sprout-journal.saltyegret15.chatgpt.site/
 - Source repository or source export:
 - Actual AI integration, or explicitly labeled manual/sample behavior:
 - Desktop and mobile checks:
