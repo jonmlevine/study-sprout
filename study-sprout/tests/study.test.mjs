@@ -65,7 +65,7 @@ test('OCI adapter constructs GENERIC chat and validates a mocked response',async
 test('HTTP app serves UI, creates plans, rejects bad requests and protects private files',async()=>{
   const server=makeServer();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base=`http://127.0.0.1:${server.address().port}`;
   try{
-    const index=await fetch(base);assert.equal(index.status,200);assert.match(await index.text(),/Study Sprout/);
+    const index=await fetch(base);assert.equal(index.status,200);const html=await index.text();assert.match(html,/Study Sprout/);assert.match(html,/No account, sign-in or purchase is required/);assert.match(html,/href="\/\?judge=1"/);
     const demo=await fetch(base+'/demo');assert.equal(demo.status,200);assert.match(await demo.text(),/DEMAND REALITY/);
     assert.equal((await fetch(base+'/adaptive.js')).status,200);
     assert.equal((await fetch(base+'/storage.js')).status,200);

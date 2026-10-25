@@ -1,0 +1,82 @@
+{
+  "appName": "Study Sprout",
+  "baseUrl": "https://study-sprout-journal.saltyegret15.chatgpt.site/",
+  "auth": {"required": false, "loginPath": "", "username": "", "password": "", "usernameSelector": "", "passwordSelector": "", "submitSelector": "", "successUrlPattern": "", "successText": []},
+  "globalRules": {
+    "maxStepTimeSeconds": 45,
+    "waitForNetworkIdle": false,
+    "notes": [
+      "Use the public app origin, not a ChatGPT conversation or editor URL. No credentials are needed.",
+      "Keep JavaScript and local or session storage enabled; preserve the browser context within each workflow.",
+      "Each workflow starts by resetting isolated fictional judge data. Regular student records are not changed.",
+      "Use document navigation for goto steps. Keep the default relative exam date and 30-minute budget.",
+      "The hosted app uses browser-local rules, not live OCI inference. Technical checks do not establish customer outcomes."
+    ]
+  },
+  "workflows": [
+    {
+      "id": "core-study-review-loop",
+      "name": "Complete work and adapt the plan from confident mistakes",
+      "purpose": "Verify source evidence, explicit completion, two-question practice, confidence-based review and saved replanning.",
+      "startPath": "/?judge=1",
+      "steps": [
+        {"action": "goto", "value": "/?judge=1"},
+        {"action": "click", "selector": "#reset-judge"},
+        {"action": "click", "value": "Take my next step"},
+        {"action": "click", "value": "Read the source evidence"},
+        {"action": "assertText", "selector": "#topic-dialog blockquote", "value": "Plants convert sunlight into chemical energy."},
+        {"action": "click", "selector": "#topic-dialog button[data-action=complete-topic]"},
+        {"action": "click", "value": "Practice now"},
+        {"action": "waitForText", "value": "1 of 2 questions"},
+        {"action": "click", "selector": "input[name=answer][value=\"0\"]"},
+        {"action": "click", "selector": "input[name=confidence][value=sure]"},
+        {"action": "click", "selector": "button[data-action=check-answer]"},
+        {"action": "waitForText", "value": "A useful thing to revisit."},
+        {"action": "click", "selector": "button[data-action=next-question]"},
+        {"action": "waitForText", "value": "2 of 2 questions"},
+        {"action": "click", "selector": "input[name=answer][value=\"1\"]"},
+        {"action": "click", "selector": "input[name=confidence][value=sure]"},
+        {"action": "click", "selector": "button[data-action=check-answer]"},
+        {"action": "click", "selector": "button[data-action=next-question]"},
+        {"action": "waitForText", "value": "Results saved to your study plan"},
+        {"action": "click", "selector": "button[data-action=replan]"},
+        {"action": "assertVisible", "selector": "#replan-dialog[open]"},
+        {"action": "click", "selector": "#apply-replan"},
+        {"action": "waitForUrl", "value": "/?judge=1#plan"},
+        {"action": "goto", "value": "/?judge=1#plan"},
+        {"action": "assertVisible", "value": "Check a misconception"},
+        {"action": "assertVisible", "selector": "button[data-action=toggle][aria-pressed=true]"}
+      ],
+      "success": {
+        "requiredUrlPattern": "[?]judge=1#plan$",
+        "allowedUrlPatterns": [],
+        "allText": ["Judge demo - Biology", "Check a misconception", "2 confident wrong answers. Check the source before reinforcing this idea.", "Recall & check your evidence"],
+        "anyText": [],
+        "visibleSelectors": ["#judge-demo", "button[data-action=toggle][aria-pressed=true]"]
+      }
+    },
+    {
+      "id": "saved-completion",
+      "name": "Preserve completed study work after reload",
+      "purpose": "Verify that explicit completion persists and the fictional demo can be reset independently.",
+      "startPath": "/?judge=1",
+      "steps": [
+        {"action": "goto", "value": "/?judge=1"},
+        {"action": "click", "selector": "#reset-judge"},
+        {"action": "click", "value": "Take my next step"},
+        {"action": "click", "selector": "#topic-dialog button[data-action=complete-topic]"},
+        {"action": "goto", "value": "/?judge=1#plan"},
+        {"action": "assertVisible", "value": "1 of 1 sessions complete."},
+        {"action": "assertVisible", "selector": "button[data-action=toggle][aria-pressed=true]"}
+      ],
+      "success": {
+        "requiredUrlPattern": "[?]judge=1#plan$",
+        "allowedUrlPatterns": [],
+        "allText": ["Judge demo - Biology", "1 of 1 sessions complete."],
+        "anyText": [],
+        "visibleSelectors": ["button[data-action=toggle][aria-pressed=true]"]
+      }
+    }
+  ],
+  "manualReviewTriggers": ["A hosting-level login or access wall appears at the public app origin. Capture its URL and visible message; do not use a personal account or claim verification passed."]
+}

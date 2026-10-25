@@ -8,6 +8,8 @@ A hackathon application that turns study notes into a manageable plan and practi
 
 - [App setup and development](study-sprout/README.md)
 - [Revised submission: middle-school students and parent buyers](SUBMISSION.md)
+- [Next submission answers and evidence boundaries](NEXT_SUBMISSION.md)
+- [AI Judge browser instructions](verification-instructions.json)
 - [Rubric evidence and pilot targets](study-sprout/JUDGING-KIT.md)
 - [Judge walkthrough](DEMO.md)
 - [ChatGPT Sites build brief](SITES_BUILD_PROMPT.md)
